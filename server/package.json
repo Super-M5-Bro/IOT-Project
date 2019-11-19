@@ -18,5 +18,9 @@
   "homepage": "https://github.com/Super-M5-Bro/IOT-Project#readme",
   "dependencies": {
     "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "eslint": "^6.6.0",
+    "eslint-plugin-vue": "^6.0.1"
   }
 }
