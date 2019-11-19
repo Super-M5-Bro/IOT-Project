@@ -2,7 +2,7 @@
   "name": "iot-project-server",
   "version": "1.0.0",
   "description": "Server of our IOT project to log stats and provide API.",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Super-M5-Bro/IOT-Project/issues"
   },
-  "homepage": "https://github.com/Super-M5-Bro/IOT-Project#readme"
+  "homepage": "https://github.com/Super-M5-Bro/IOT-Project#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
