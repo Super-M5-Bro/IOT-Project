@@ -15,26 +15,22 @@ const server = app.listen(port, () => {
 });
 
 app.post('/client', (req, res) => {
-  res.setHeader('Content-Type', 'text/plain');
-  res.send('New Client');
-
-  const stmt = db.prepare('INSERT INTO client VALUES (?, ?)');
-  stmt.run(1);
-  stmt.finalize();
+  db.run(`INSERT INTO ${tableName}(${enteredCol}) VALUES(?)`, 1);
+  res.status(200);
+  res.send();
 });
 
 app.delete('/client', (req, res) => {
-  res.setHeader('Content-Type', 'text/plain');
-  res.send('Client gone from the shop');
-
-  const stmt = db.prepare('INSERT INTO client VALUES (?, ?)');
-  stmt.run(1);
-  stmt.finalize();
+  db.run(`INSERT INTO ${tableName}(${enteredCol}) VALUES(?)`, 0);
+  res.status(200);
+  res.send();
 });
 
 app.get('/client', (req, res) => {
-  db.each('SELECT entry, time FROM client', (err, row) => {
-    console.log(`${row.entry}: ${row.time}`);
+  db.get(`SELECT COUNT(*) AS left, (SELECT COUNT(*) as entered FROM ${tableName} WHERE ${enteredCol} = 1) AS entered FROM ${tableName} WHERE ${enteredCol} = 0`, (err, row) => {
+    if (err !== null) res.sendStatus(500);
+    res.status(200);
+    res.json({ in: row.entered - row.left });
   });
 });
 
