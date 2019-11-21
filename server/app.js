@@ -2,9 +2,17 @@ const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 
 const app = express();
-const db = new sqlite3.Database(':memory:');
+const db = new sqlite3.Database('db');
+const tableName = 'logs';
+const dateCol = 'timeLogged';
+const enteredCol = 'entered';
 
 const port = 8080;
+
+const server = app.listen(port, () => {
+  const sql = `CREATE TABLE IF NOT EXISTS ${tableName}(id INTEGER PRIMARY KEY AUTOINCREMENT, ${dateCol} TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, ${enteredCol} BOOLEAN NOT NULL)`;
+  db.run(sql, () => null);
+});
 
 app.post('/client', (req, res) => {
   res.setHeader('Content-Type', 'text/plain');
@@ -30,26 +38,8 @@ app.get('/client', (req, res) => {
   });
 });
 
-app.post('/db', (req, res) => {
-  // Check if the database is already created
-  db.get("SELECT name FROM sqlite_master WHERE type='table' AND name='{client}'", (err, row) => {
-    console.log(row);
-
-    // If we have no result, we create the table
-    if (row === undefined) {
-      db.run('CREATE TABLE client (entry BOOLEAN, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL)');
-      console.log('Create');
-    } else {
-      console.log('Manage');
-    }
+process.on('SIGINT', () => {
+  server.close(() => {
+    db.close();
   });
-
-
-  res.setHeader('Content-Type', 'text/plain');
-  res.send('Creation of the database');
 });
-
-app.listen(port);
-
-// Close the database
-// db.close();
