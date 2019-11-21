@@ -6,12 +6,7 @@ const db = new sqlite3.Database(':memory:');
 
 const port = 8080;
 
-app.get('/', (req, res) => {
-  res.setHeader('Content-Type', 'text/plain');
-  res.send('Home Api Page');
-});
-
-app.get('/client/new', (req, res) => {
+app.post('/client', (req, res) => {
   res.setHeader('Content-Type', 'text/plain');
   res.send('New Client');
 
@@ -20,7 +15,7 @@ app.get('/client/new', (req, res) => {
   stmt.finalize();
 });
 
-app.get('/client/delete', (req, res) => {
+app.delete('/client', (req, res) => {
   res.setHeader('Content-Type', 'text/plain');
   res.send('Client gone from the shop');
 
@@ -29,13 +24,13 @@ app.get('/client/delete', (req, res) => {
   stmt.finalize();
 });
 
-app.get('/client/current', (req, res) => {
+app.get('/client', (req, res) => {
   db.each('SELECT entry, time FROM client', (err, row) => {
     console.log(`${row.entry}: ${row.time}`);
   });
 });
 
-app.get('/create', (req, res) => {
+app.post('/db', (req, res) => {
   // Check if the database is already created
   db.get("SELECT name FROM sqlite_master WHERE type='table' AND name='{client}'", (err, row) => {
     console.log(row);
