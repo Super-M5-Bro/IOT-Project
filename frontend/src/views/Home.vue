@@ -41,7 +41,7 @@
                 <v-col cols="5" offset="1">
                   <v-icon size="92" color="green">person</v-icon>
                 </v-col>
-                <v-col class="display-3" cols="5" offset="1">45</v-col>
+                <v-col class="display-3" cols="5" offset="1">{{$store.state.today_in}}</v-col>
               </v-row>
             </v-card-text>
           </v-card>
@@ -63,7 +63,7 @@
                 <v-col cols="5" offset="1">
                   <v-icon size="92" color="red">person</v-icon>
                 </v-col>
-                <v-col class="display-3" cols="5" offset="1">33</v-col>
+                <v-col class="display-3" cols="5" offset="1">{{$store.state.today_out}}</v-col>
               </v-row>
             </v-card-text>
           </v-card>
