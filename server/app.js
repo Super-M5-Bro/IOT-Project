@@ -32,8 +32,19 @@ app.delete('/client', (req, res) => {
 app.get('/client', (req, res) => {
   db.get(`SELECT COUNT(*) AS left, (SELECT COUNT(*) as entered FROM ${tableName} WHERE ${enteredCol} = 1) AS entered FROM ${tableName} WHERE ${enteredCol} = 0`, (err, row) => {
     if (err !== null) res.sendStatus(500);
-    res.status(200);
-    res.json({ in: row.entered - row.left });
+    const current = row.entered - row.left;
+    const inDates = [];
+    const outDates = [];
+    db.each(`SELECT * FROM ${tableName} WHERE ${dateCol} >= date('now', 'start of day', 'localtime')`, (err, row) => {
+      if (row.entered) {
+        inDates.push(row.timeLogged);
+      } else {
+        outDates.push(row.timeLogged);
+      }
+    }, () => {
+      res.status(200);
+      res.json({ in_today: inDates, out_today: outDates, current });
+    });
   });
 });
 
