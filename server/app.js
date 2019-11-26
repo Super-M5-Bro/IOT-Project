@@ -1,5 +1,6 @@
 const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
+const cors = require('cors');
 
 const app = express();
 const db = new sqlite3.Database('db');
@@ -8,6 +9,8 @@ const dateCol = 'timeLogged';
 const enteredCol = 'entered';
 
 const port = 8081;
+
+app.use(cors());
 
 const server = app.listen(port, () => {
   const sql = `CREATE TABLE IF NOT EXISTS ${tableName}(id INTEGER PRIMARY KEY AUTOINCREMENT, ${dateCol} TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, ${enteredCol} BOOLEAN NOT NULL)`;
