@@ -14,7 +14,7 @@ export default new Vuex.Store({
   },
   actions: {
     retrieve_current(context) {
-      fetch('http://localhost:8081/client').then(r => r.json()).then(j => context.commit('set_current', j.in)).catch(e => console.log(e));
+      fetch('http://localhost:8081/client').then(r => r.json()).then(j => context.commit('set_current', j.current)).catch(e => console.log(e));
     },
   },
   modules: {
