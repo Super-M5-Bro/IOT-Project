@@ -10,7 +10,7 @@
             <v-list-item two-line>
               <v-list-item-content>
                 <v-list-item-title class="headline">Clients</v-list-item-title>
-                <v-list-item-subtitle>Nombre de clients dans le magasin</v-list-item-subtitle>
+                <v-list-item-subtitle>Nombre de clients dans le magasin le </v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
 
@@ -91,7 +91,13 @@ export default {
     return {
       ctx: null,
       c: null,
+      curent_date: new Date(),
     };
+  },
+  computed: {
+    current_date_str() {
+      return `${this.curent_date.getFullYear()}/${(this.curent_date.getMonth() + 1)}/${this.curent_date.getDate()}`;
+    },
   },
   components: {
     // HelloWorld,
@@ -100,20 +106,18 @@ export default {
   mounted() {
     this.ctx = document.getElementById('myChart').getContext('2d');
     this.c = new Chart(this.ctx, {
-      type: 'line',
+      type: 'bar',
       data: {
         labels: ['8h', '9h', '10h', '11h', '12h', '13h', '14h', '15h', '16h', '17h', '18h'],
         datasets: [{
-          label: 'Nombre de clients dans la journée du 26/11/2019',
+          label: `Nombre de clients dans la journée du ${this.current_date_str}`,
           backgroundColor: 'rgb(255, 99, 132)',
           borderColor: 'rgb(255, 99, 132)',
-          data: [0, 3, 5, 15, 12, 30, 45, 23, 19, 25, 13],
+          data: [1, 3, 5, 15, 12, 30, 45, 23, 19, 25, 13],
         }],
       },
       options: {},
     });
   },
-
 };
-
 </script>
