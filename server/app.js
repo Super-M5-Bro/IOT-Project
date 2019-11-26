@@ -7,7 +7,7 @@ const tableName = 'logs';
 const dateCol = 'timeLogged';
 const enteredCol = 'entered';
 
-const port = 8080;
+const port = 8081;
 
 const server = app.listen(port, () => {
   const sql = `CREATE TABLE IF NOT EXISTS ${tableName}(id INTEGER PRIMARY KEY AUTOINCREMENT, ${dateCol} TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, ${enteredCol} BOOLEAN NOT NULL)`;
