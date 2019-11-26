@@ -37,6 +37,18 @@ app.get('/client', (req, res) => {
   });
 });
 
+app.get('/client/today', (req, res) => {
+  db.each(`SELECT * FROM ${tableName} WHERE ${enteredCol} = 1 AND ${dateCol} >= '2019-11-26 00:00:00'`, (err, row) => {
+    console.log(row);
+    // if (err !== null) res.sendStatus(500);
+    // res.status(200);
+    // res.json({ in: row.entered - row.left });
+    // res.json(null);
+  }, () => {
+    res.sendStatus(200);
+  });
+});
+
 process.on('SIGINT', () => {
   server.close(() => {
     db.close();
