@@ -19,7 +19,7 @@
                 <v-col cols="5" offset="1">
                   <v-icon size="92" color="blue">person</v-icon>
                 </v-col>
-                <v-col class="display-3" cols="5" offset="1">12</v-col>
+                <v-col class="display-3" cols="5" offset="1">{{ $store.state.current }}</v-col>
               </v-row>
             </v-card-text>
           </v-card>
