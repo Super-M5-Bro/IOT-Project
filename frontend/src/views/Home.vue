@@ -4,13 +4,13 @@
     <v-container>
       <h1>Dashboard</h1>
 
-      <v-row>
-        <v-col cols="4">
-          <v-card class="mx-auto" max-width="300">
+      <v-row justify="space-around">
+        <v-col cols="8" lg="4">
+          <v-card>
             <v-list-item two-line>
               <v-list-item-content>
                 <v-list-item-title class="headline">Clients</v-list-item-title>
-                <v-list-item-subtitle>Nombre de clients dans le magasin le </v-list-item-subtitle>
+                <v-list-item-subtitle>Nombre de clients dans le magasin</v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
 
@@ -25,13 +25,13 @@
           </v-card>
         </v-col>
 
-        <v-col cols="4">
-          <v-card class="mx-auto" max-width="300">
+        <v-col cols="8" lg="4">
+          <v-card>
             <v-list-item two-line>
               <v-list-item-content>
-                <v-list-item-title class="headline">Entrée</v-list-item-title>
+                <v-list-item-title class="headline">Visites</v-list-item-title>
                 <v-list-item-subtitle>
-                  Nombre de clients entrée dans le magasin durant la journée
+                  Clients entrés dans le magasin aujourd'hui
                 </v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
@@ -49,7 +49,7 @@
           </v-card>
         </v-col>
 
-        <v-col cols="4">
+        <!-- <v-col cols="4">
           <v-card class="mx-auto" max-width="300">
             <v-list-item two-line>
               <v-list-item-content>
@@ -71,11 +71,12 @@
               </v-row>
             </v-card-text>
           </v-card>
-        </v-col>
+        </v-col> -->
+
       </v-row>
 
-      <v-row>
-        <v-col cols="12">
+      <v-row justify="center">
+        <v-col cols="12" lg="8">
           <canvas id="myChart"></canvas>
         </v-col>
       </v-row>
