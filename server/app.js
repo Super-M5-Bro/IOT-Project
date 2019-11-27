@@ -35,11 +35,11 @@ app.get('/client', (req, res) => {
     const current = row.entered - row.left;
     const inDates = [];
     const outDates = [];
-    db.each(`SELECT * FROM ${tableName} WHERE ${dateCol} >= date('now', 'start of day', 'localtime')`, (err, row) => {
-      if (row.entered) {
-        inDates.push(row.timeLogged);
+    db.each(`SELECT entered, DATETIME(timeLogged, 'LOCALTIME') AS timeLogged FROM ${tableName} WHERE ${dateCol} >= date('now', 'start of day', 'localtime')`, (err2, row2) => {
+      if (row2.entered) {
+        inDates.push(row2.timeLogged);
       } else {
-        outDates.push(row.timeLogged);
+        outDates.push(row2.timeLogged);
       }
     }, () => {
       res.status(200);
