@@ -4,7 +4,7 @@
   "description": "Server of our IOT project to log stats and provide API.",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
+    "serve": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
