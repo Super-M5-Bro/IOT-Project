@@ -41,7 +41,9 @@
                 <v-col cols="5" offset="1">
                   <v-icon size="92" color="green">person</v-icon>
                 </v-col>
-                <v-col class="display-3" cols="5" offset="1">{{$store.state.today_in}}</v-col>
+                <v-col class="display-3" cols="5" offset="1">
+                  {{$store.state.today_in.length}}
+                </v-col>
               </v-row>
             </v-card-text>
           </v-card>
@@ -63,7 +65,9 @@
                 <v-col cols="5" offset="1">
                   <v-icon size="92" color="red">person</v-icon>
                 </v-col>
-                <v-col class="display-3" cols="5" offset="1">{{$store.state.today_out}}</v-col>
+                <v-col class="display-3" cols="5" offset="1">
+                  {{$store.state.today_out.length}}
+                </v-col>
               </v-row>
             </v-card-text>
           </v-card>
@@ -92,15 +96,32 @@ export default {
       ctx: null,
       c: null,
       curent_date: new Date(),
+      hour_start: 8,
+      hour_end: 23,
     };
   },
+
   computed: {
     current_date_str() {
       return `${this.curent_date.getFullYear()}/${(this.curent_date.getMonth() + 1)}/${this.curent_date.getDate()}`;
     },
+    chart_labels() {
+      const res = [];
+      for (let index = this.hour_start; index <= this.hour_end; index += 1) {
+        res[index - this.hour_start] = `${index}h`;
+      }
+      return res;
+    },
+    visitors_hour() {
+      return this.$store.getters.visitors_hour.slice(this.hour_start, this.hour_end + 1);
+    },
   },
-  components: {
-    // HelloWorld,
+
+  watch: {
+    visitors_hour(newData) {
+      this.c.data.datasets[0].data = newData;
+      this.c.update();
+    },
   },
 
   mounted() {
@@ -108,12 +129,12 @@ export default {
     this.c = new Chart(this.ctx, {
       type: 'bar',
       data: {
-        labels: ['8h', '9h', '10h', '11h', '12h', '13h', '14h', '15h', '16h', '17h', '18h'],
+        labels: this.chart_labels,
         datasets: [{
           label: `Nombre de clients dans la journée du ${this.current_date_str}`,
           backgroundColor: 'rgb(255, 99, 132)',
           borderColor: 'rgb(255, 99, 132)',
-          data: [1, 3, 5, 15, 12, 30, 45, 23, 19, 25, 13],
+          data: this.visitors_hour,
         }],
       },
       options: {},
