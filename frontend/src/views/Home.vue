@@ -81,6 +81,21 @@
         </v-col>
       </v-row>
 
+      <v-row justify="center" class="mt-4">
+        <v-col cols="10" lg="6">
+          <v-range-slider
+            v-model="hours_range"
+            label="Heures du diagramme"
+            min="0"
+            max="23"
+            step="1"
+            color="rgb(255, 99, 132)"
+            track-color="rgba(255, 99, 132, 0.4)"
+            thumb-label>
+          </v-range-slider>
+        </v-col>
+      </v-row>
+
     </v-container>
   </div>
 </template>
@@ -97,8 +112,7 @@ export default {
       ctx: null,
       c: null,
       curent_date: new Date(),
-      hour_start: 8,
-      hour_end: 23,
+      hours_range: [8, 18],
     };
   },
 
@@ -108,19 +122,24 @@ export default {
     },
     chart_labels() {
       const res = [];
-      for (let index = this.hour_start; index <= this.hour_end; index += 1) {
-        res[index - this.hour_start] = `${index}h`;
+      for (let index = this.hours_range[0]; index <= this.hours_range[1]; index += 1) {
+        res[index - this.hours_range[0]] = `${index}h`;
       }
       return res;
     },
     visitors_hour() {
-      return this.$store.getters.visitors_hour.slice(this.hour_start, this.hour_end + 1);
+      return this.$store.getters.visitors_hour.slice(this.hours_range[0], this.hours_range[1] + 1);
     },
   },
 
   watch: {
-    visitors_hour(newData) {
-      this.c.data.datasets[0].data = newData;
+    visitors_hour() {
+      this.c.data.datasets[0].data = this.visitors_hour;
+      this.c.update();
+    },
+    hours_range() {
+      this.c.data.labels = this.chart_labels;
+      this.c.data.datasets[0].data = this.visitors_hour;
       this.c.update();
     },
   },
