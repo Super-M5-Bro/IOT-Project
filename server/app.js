@@ -48,6 +48,15 @@ app.get('/client', (req, res) => {
   });
 });
 
+app.get('/client/m5', (req, res) => {
+  db.get(`SELECT COUNT(*) AS left, (SELECT COUNT(*) as entered FROM ${tableName} WHERE ${enteredCol} = 1) AS entered FROM ${tableName} WHERE ${enteredCol} = 0`, (err, row) => {
+    if (err !== null) res.sendStatus(500);
+    const current = row.entered - row.left;
+    res.status(200);
+    res.send('' + current);
+  });
+});
+
 process.on('SIGINT', () => {
   server.close(() => {
     db.close();
