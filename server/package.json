@@ -4,7 +4,7 @@
   "description": "Server of our IOT project to log stats and provide API.",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
+    "serve": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/Super-M5-Bro/IOT-Project#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "sqlite3": "^4.1.0"
   },
