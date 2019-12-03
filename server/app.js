@@ -17,13 +17,13 @@ const server = app.listen(port, () => {
   db.run(sql, () => null);
 });
 
-app.post('/client', (req, res) => {
+app.post('/client/enter', (req, res) => {
   db.run(`INSERT INTO ${tableName}(${enteredCol}) VALUES(?)`, 1);
   res.status(200);
   res.send();
 });
 
-app.delete('/client', (req, res) => {
+app.post('/client/leave', (req, res) => {
   db.run(`INSERT INTO ${tableName}(${enteredCol}) VALUES(?)`, 0);
   res.status(200);
   res.send();
@@ -53,7 +53,7 @@ app.get('/client/m5', (req, res) => {
     if (err !== null) res.sendStatus(500);
     const current = row.entered - row.left;
     res.status(200);
-    res.send('' + current);
+    res.send(`${current}`);
   });
 });
 
