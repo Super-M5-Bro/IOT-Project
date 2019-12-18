@@ -8,7 +8,7 @@
 export default {
   mounted() {
     this.$store.dispatch('retrieve_current');
-    window.setInterval(() => { this.$store.dispatch('retrieve_current'); }, 5000);
+    window.setInterval(() => { this.$store.dispatch('retrieve_current'); }, 1000);
   },
 };
 </script>
